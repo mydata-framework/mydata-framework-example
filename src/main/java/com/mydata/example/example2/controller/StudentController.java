@@ -86,7 +86,7 @@ public class StudentController extends BaseController {
             @RequestParam(value = "endAge",required = true)Integer endAge){
 
         Set<Param> pms = new Param("name",EQ,name).AND("age",GE,startAge).AND("age",LE,endAge).END();
-        PageData<Student> pageInfo = studentService.getStudentDao().getPageInfo(pms, curPage, pageSize);
+        PageData<Student> pageInfo = studentService.getStudentDao().getPageInfo( curPage, pageSize,pms);
         return pageInfo;
     }
 
@@ -111,7 +111,7 @@ public class StudentController extends BaseController {
         if (param.getEndAge() != null) {
             params.add(new Param("age", LE, param.getEndAge()));
         }
-        PageData<Student> pageInfo = studentService.getStudentDao().getPageInfo(param.getCurPage(), param.getPageSize(), param.getOrderbys(), params);
+        PageData<Student> pageInfo = studentService.getStudentDao().getPageInfo(param.getCurPage(), param.getPageSize(), params,param.getOrderbys());
         return pageInfo;
     }
 
@@ -128,7 +128,7 @@ public class StudentController extends BaseController {
     @ResponseBody
     public List<String> getStudentNames(){
         Set<Param> params = null;
-        return (List) studentService.getStudentDao().getVlList("name", params);
+        return (List) studentService.getStudentDao().getVList("name", params);
     }
 
     // GET localhost:8080/getStudentList
@@ -162,7 +162,7 @@ public class StudentController extends BaseController {
         LinkedHashMap<String, String> funs = Param.getStringMap("min", "age");
         String[] groupbys = Param.getStringArr("age", "address");
 
-        List<Object[]> groupList = studentService.getStudentDao().getGroupList(curPage, pageSize, orderbys, pms, funs, groupbys);
+        List<Object[]> groupList = studentService.getStudentDao().getGroupPageList(curPage, pageSize, pms, orderbys,funs, groupbys);
         return groupList;
     }
 
