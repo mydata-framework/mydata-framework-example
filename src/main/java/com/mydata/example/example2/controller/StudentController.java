@@ -3,14 +3,12 @@ package com.mydata.example.example2.controller;
 import com.mydata.example.example2.controller.base.BaseController;
 import com.mydata.example.example2.domain.Student;
 import com.mydata.example.example2.vo.GetStudentPage2Vo;
+import com.mydata.helper.OrderBy;
 import com.mydata.helper.PageData;
 import com.mydata.helper.Param;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.mydata.em.Operate.*;
 
@@ -150,7 +148,28 @@ public class StudentController extends BaseController {
         }
         return "SEE THE TABLE , Is there A and B";
     }
+
+    // GET localhost:8080/testGroupList
+    @GetMapping("/testGroupList")
+    @ResponseBody
+    public List<Object[]> testGroupList(){
+        //SELECT  MIN(stu_age),stu_age,address FROM student  WHERE `name`  IS  NOT  NULL GROUP  BY  stu_age,address ORDER  BY  MIN(stu_age)  DESC    LIMIT  0,10;
+
+        int curPage =1;
+        int pageSize = 10;
+        LinkedHashSet<OrderBy> orderbys = OrderBy.getOrderBys(new OrderBy("age", "min", true));
+        Set<Param> pms = Param.getParams(new Param("name", NOT_EQ, null));
+        LinkedHashMap<String, String> funs = Param.getStringMap("min", "age");
+        String[] groupbys = Param.getStringArr("age", "address");
+
+        List<Object[]> groupList = studentService.getStudentDao().getGroupList(curPage, pageSize, orderbys, pms, funs, groupbys);
+        return groupList;
+    }
+
     //more... Example ...
+
+
+
 
 }
 
