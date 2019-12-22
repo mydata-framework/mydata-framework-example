@@ -166,6 +166,26 @@ public class StudentController extends BaseController {
         return groupList;
     }
 
+
+    @GetMapping("/testNativeQuery")
+    @ResponseBody
+    public Student testNativeQuery(){
+        String sql = "SELECT * FROM student WHERE id=?";
+        Object[] pms = new Object[]{1};
+        Student student = studentService.getStudentDao().nativeQuery(sql, pms, Student.class);
+        return student;
+    }
+
+
+    @GetMapping("/nativeExecute")
+    @ResponseBody
+    public Integer nativeExecute(){
+        String sql = "DELETE FROM student WHERE id=?";
+        Object[] pms = new Object[]{1};
+        int i = studentService.getStudentDao().nativeExecute(sql, pms);
+        return i;
+    }
+
     //more... Example ...
 
 
