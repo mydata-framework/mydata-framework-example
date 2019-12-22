@@ -38,7 +38,6 @@ public class StudentController extends BaseController {
         return studentService.getStudentDao().getById(id);
     }
 
-
     // PUT localhost:8080/updateStudent
     // JSON:
     //      {
@@ -174,6 +173,16 @@ public class StudentController extends BaseController {
         Object[] pms = new Object[]{1};
         Student student = studentService.getStudentDao().nativeQuery(sql, pms, Student.class);
         return student;
+    }
+
+
+    @GetMapping("/testNativeQuery2")
+    @ResponseBody
+    public String testNativeQuery2(@RequestParam("id") Long id){
+        String sql = "SELECT name FROM student WHERE id=?";
+        Object[] pms = new Object[]{id};
+        String name = studentService.getStudentDao().nativeQuery(sql, pms, String.class);
+        return name;
     }
 
 
