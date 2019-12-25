@@ -77,10 +77,11 @@ public class AccountController {
                 System.out.println("thread1: version = "+account.getVersion());
             }
         };
-        new Thread(runnable).start();
 
         Account account2 = accountDao.getById(id);
         System.out.println("thread2: version = "+account2.getVersion());
+
+        new Thread(runnable).start();
 
         try {
             Thread.sleep(1000 * 10);
