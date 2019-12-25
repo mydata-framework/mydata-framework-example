@@ -1,6 +1,7 @@
 package com.mydata.example.example3.domain;
 
 import javax.persistence.*;
+import java.lang.Long;
 import java.util.Date;
 
 @Table
@@ -58,5 +59,4 @@ public class Account {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
-
 }
