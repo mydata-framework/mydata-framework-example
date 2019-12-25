@@ -26,6 +26,9 @@ public class Student {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
+    @Version
+    private Long version;
+
     public Long getId() {
         return id;
     }
@@ -80,5 +83,13 @@ public class Student {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
