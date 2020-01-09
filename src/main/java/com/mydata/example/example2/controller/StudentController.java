@@ -166,9 +166,9 @@ public class StudentController extends BaseController {
     }
 
 
-    @GetMapping("/testNativeQuery")
+    @GetMapping("/testNativeQuery1")
     @ResponseBody
-    public Student testNativeQuery(){
+    public Student testNativeQuery1(){
         String sql = "SELECT * FROM student WHERE id=?";
         Object[] pms = new Object[]{1};
         Student student = studentService.getStudentDao().nativeQuery(sql, pms, Student.class);
@@ -178,13 +178,59 @@ public class StudentController extends BaseController {
 
     @GetMapping("/testNativeQuery2")
     @ResponseBody
-    public String testNativeQuery2(@RequestParam("id") Long id){
+    public String testNativeQuery2(){
         String sql = "SELECT name FROM student WHERE id=?";
-        Object[] pms = new Object[]{id};
+        Object[] pms = new Object[]{1};
         String name = studentService.getStudentDao().nativeQuery(sql, pms, String.class);
         return name;
     }
 
+    @GetMapping("/testNativeQuery3")
+    @ResponseBody
+    public Integer testNativeQuery3(){
+        String sql = "SELECT count(1) FROM student";
+        Object[] pms = new Object[]{};
+        Integer count = studentService.getStudentDao().nativeQuery(sql, pms, Integer.class);
+        return count;
+    }
+
+    @GetMapping("/testNativeQuery4")
+    @ResponseBody
+    public List<String> testNativeQuery4(){
+        String sql = "SELECT name FROM student";
+        Object[] pms = new Object[]{};
+        List<String> names = studentService.getStudentDao().nativeQueryList(sql, pms, String.class);
+        return names;
+    }
+
+    @GetMapping("/testNativeQuery5")
+    @ResponseBody
+    public List<Student> testNativeQuery5(){
+        String sql = "SELECT * FROM student";
+        Object[] pms = new Object[]{};
+        List<Student> students = studentService.getStudentDao().nativeQueryList(sql, pms, Student.class);
+        return students;
+    }
+
+    @GetMapping("/testNativeQuery6")
+    @ResponseBody
+    public PageData<Student> testNativeQuery6(){
+        String sql = "SELECT * FROM student";
+        Object[] pms = new Object[]{};
+        PageData<Student> tPageData = studentService.getStudentDao().nativeQueryPage(1,10, sql, pms, Student.class);
+        return tPageData;
+    }
+
+    @GetMapping("/testNativeQuery7")
+    @ResponseBody
+    public PageData<Student> testNativeQuery7(
+            @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+            @RequestParam(value = "pageSize",required = false, defaultValue = "10")Integer pageSize
+    ){
+        String sql = "SELECT * FROM student";
+        PageData<Student> page = studentService.getStudentDao().nativeQueryPage(pageNum, pageSize, sql, null, Student.class);
+        return page;
+    }
 
     @GetMapping("/nativeExecute")
     @ResponseBody
