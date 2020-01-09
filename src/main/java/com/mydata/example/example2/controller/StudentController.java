@@ -232,6 +232,34 @@ public class StudentController extends BaseController {
         return page;
     }
 
+    public static class StudentIdNameClass{
+        private String id;
+        private String name;
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    @GetMapping("/testNativeQuery8")
+    @ResponseBody
+    public PageData<StudentIdNameClass> testNativeQuery8(
+            @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+            @RequestParam(value = "pageSize",required = false, defaultValue = "10")Integer pageSize
+    ){
+        String sql = "SELECT id,name FROM student where id > ?";
+        Object[] pms = new Object[]{10};
+        PageData<StudentIdNameClass> page = studentService.getStudentDao().nativeQueryPage(pageNum, pageSize, sql, pms, StudentIdNameClass.class);
+        return page;
+    }
+
     @GetMapping("/nativeExecute")
     @ResponseBody
     public Integer nativeExecute(){
