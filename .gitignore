@@ -45,4 +45,7 @@ build/
 hs_err_pid*
 /target
 /target/*
+*/rebel.xml
+*reber.xml
+
 
