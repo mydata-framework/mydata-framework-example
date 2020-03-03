@@ -3,5 +3,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/mydata?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT&useSSL=false
     username: root
     password: root
+
 mydata:
   showSql: true

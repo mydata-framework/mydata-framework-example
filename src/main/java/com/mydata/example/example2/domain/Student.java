@@ -1,9 +1,12 @@
 package com.mydata.example.example2.domain;
 
+import com.mydata.annotation.TableComment;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Table
+@TableComment("学生表")
 public class Student {
 
     @Id
