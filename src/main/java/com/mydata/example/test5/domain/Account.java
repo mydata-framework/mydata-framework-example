@@ -1,4 +1,4 @@
-package com.mydata.example.test.domain;
+package com.mydata.example.test5.domain;
 
 import com.mydata.annotation.MyIndex;
 import com.mydata.annotation.TableComment;

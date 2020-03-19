@@ -1,11 +1,8 @@
-package com.mydata.example.test;
+package com.mydata.example.test5;
 
 import com.mydata.config.MyDataAutoConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.context.TestComponent;
-
-import javax.annotation.Resource;
 
 @SpringBootApplication
 @MyDataAutoConfig

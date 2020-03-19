@@ -1,8 +1,10 @@
-package com.mydata.example.test;
+package com.mydata.example.test5;
 
 import com.mydata.em.Operate;
-import com.mydata.example.test.dao.AccountDao;
-import com.mydata.example.test.domain.Account;
+import com.mydata.em.StatisticsType;
+import com.mydata.example.test5.dao.AccountDao;
+import com.mydata.example.test5.domain.Account;
+import com.mydata.example.test5.vo.IdNumberBean;
 import com.mydata.helper.OrderBy;
 import com.mydata.helper.PageData;
 import com.mydata.helper.Param;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mydata.em.Operate.EQ;
@@ -24,7 +27,7 @@ import static com.mydata.helper.Param.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class Test1 {
+public class TestBegin {
     @Resource
     private AccountDao accountDao;
 
@@ -38,7 +41,7 @@ public class Test1 {
     public void testSave() {
         Account account = new Account();
         account.setNumber("18516568898");
-        account.setBalance(1000000D);
+        account.setBalance(1000D);
         account.setType(1);
         accountDao.save(account);
 
@@ -46,7 +49,7 @@ public class Test1 {
         for (int i = 0; i < 100; i++) {
             Account item = new Account();
             item.setNumber(100 + i + "");
-            item.setBalance(1000000D);
+            item.setBalance(1000D);
             item.setType(1);
             accountList.add(item);
         }
@@ -133,7 +136,7 @@ public class Test1 {
     }
 
     /**
-     * getList 查询
+     * List 查询
      */
     @Test
     public void testGetList() {
@@ -150,8 +153,11 @@ public class Test1 {
         System.out.println(listOrderBy1);
     }
 
+    /**
+     * 分页查询
+     */
     @Test
-    public void testGetPage(){
+    public void testGetPage() {
         Integer pageNum = 1;
         Integer pageSize = 10;
         PageData<Account> pageData = accountDao.getPageInfo(pageNum, pageSize, ps(p("id", GT, 10)));
@@ -173,5 +179,130 @@ public class Test1 {
         System.out.println(isPrev);
     }
 
+    /**
+     * 分页查询, 排序
+     */
+    @Test
+    public void testGetPageAndOrder() {
+        Integer pageNum = 1;
+        Integer pageSize = 10;
+        PageData<Account> pageData = accountDao.getPageInfo(pageNum, pageSize, ps(p("id", GT, 10)), os(o("id"), o("createTime")));
+
+        long totalCount = pageData.getTotalCount();
+        long totalPage = pageData.getTotalPage();
+        List<Account> dataList = pageData.getDataList();
+        int curPage = pageData.getCurPage();
+        int pageSize1 = pageData.getPageSize();
+        Boolean isNext = pageData.getIsNext();
+        Boolean isPrev = pageData.getIsPrev();
+
+        System.out.println(totalCount);
+        System.out.println(totalPage);
+        System.out.println(dataList);
+        System.out.println(curPage);
+        System.out.println(pageSize1);
+        System.out.println(isNext);
+        System.out.println(isPrev);
+    }
+
+    /**
+     * 统计查询
+     */
+    @Test
+    public void testStatistics() {
+        Double maxBalance = accountDao.getStatisticsValue(StatisticsType.MAX, "balance", null);
+        System.out.println(maxBalance);
+
+        Double minBalance = accountDao.getStatisticsValue(StatisticsType.MIN, "balance", null);
+        System.out.println(minBalance);
+
+        Double sum = accountDao.getStatisticsValue(StatisticsType.SUM, "balance", getParams(new Param("id", GT, 90)));
+        System.out.println(sum);
+    }
+
+    /**
+     * 单属性序列查询
+     */
+    @Test
+    public void testV() {
+        List<Long> idList = (List) accountDao.getVList("id", getParams(new Param("id", GT, 20)));
+        System.out.println(idList);
+    }
+
+
+    /**
+     * 原生sql支持,(不推荐使用sql)
+     */
+    @Test
+    public void testNativeQuery1() {
+        Account account = accountDao.nativeQuery("SELECT * FROM account WHERE id = ?", Arrays.asList(100).toArray(), Account.class);
+        System.out.println(account);
+    }
+
+    /**
+     * 原生sql支持,(不推荐使用sql)
+     */
+    @Test
+    public void testNativeQuery2() {
+        String number = accountDao.nativeQuery("SELECT number FROM account WHERE id = ?", arr(100), String.class);
+        System.out.println(number);
+    }
+
+    /**
+     * 原生sql支持,(不推荐使用sql)
+     */
+    @Test
+    public void testNativeQueryList() {
+        List<Account> accounts = accountDao.nativeQueryList("SELECT * FROM account WHERE id IN (?,?,?)", arr(10, 20, 30), Account.class);
+        System.out.println(accounts);
+
+        List<String> numbers = accountDao.nativeQueryList("SELECT number FROM account WHERE id > ?", arr(90), String.class);
+        System.out.println(numbers);
+    }
+
+
+    /**
+     * 原生sql支持, 分页查询 , (不推荐使用)
+     */
+    @Test
+    public void testNativeQueryPage() {
+        Integer pageNum = 1;
+        Integer pageSize = 10;
+        PageData<IdNumberBean> pageData = accountDao.nativeQueryPage(pageNum, pageSize, "SELECT id,number num FROM account WHERE id > ?", arr(50), IdNumberBean.class);
+
+        long totalCount = pageData.getTotalCount();
+        long totalPage = pageData.getTotalPage();
+        List<IdNumberBean> dataList = pageData.getDataList();
+        int curPage = pageData.getCurPage();
+        int pageSize1 = pageData.getPageSize();
+        Boolean isNext = pageData.getIsNext();
+        Boolean isPrev = pageData.getIsPrev();
+
+        System.out.println(totalCount);
+        System.out.println(totalPage);
+        System.out.println(dataList);
+        System.out.println(curPage);
+        System.out.println(pageSize1);
+        System.out.println(isNext);
+        System.out.println(isPrev);
+    }
+
+    /**
+     * 原生sql支持, sql执行操作 , (不推荐使用)
+     */
+    @Test
+    public void testNativeExecute() {
+        int updatedNum = accountDao.nativeExecute("UPDATE account SET number = ? WHERE id = ?", arr("new number", 100));
+        System.out.println(updatedNum);
+    }
+
+    /**
+     * 原生sql支持, sql执行操作 , (不推荐使用)
+     */
+    @Test
+    public void testNativeExecute2() {
+        int updatedNum = accountDao.nativeExecute("DELETE FROM account", null);
+        System.out.println(updatedNum);
+    }
 
 }

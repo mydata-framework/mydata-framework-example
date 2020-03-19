@@ -1,7 +1,7 @@
-package com.mydata.example.test.dao;
+package com.mydata.example.test5.dao;
 
 import com.mydata.dao.base.impl.MyData;
-import com.mydata.example.test.domain.Account;
+import com.mydata.example.test5.domain.Account;
 import org.springframework.stereotype.Repository;
 
 @Repository
