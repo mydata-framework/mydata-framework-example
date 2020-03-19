@@ -27,7 +27,7 @@ import static com.mydata.helper.Param.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class TestBegin {
+public class TestBegin1 {
     @Resource
     private AccountDao accountDao;
 
