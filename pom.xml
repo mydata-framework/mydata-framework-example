@@ -43,7 +43,7 @@
 
         <!--mydata-->
         <dependency>
-            <groupId>com.mydata</groupId>
+            <groupId>run.mydata</groupId>
             <artifactId>mydata-framework</artifactId>
             <version>1.0</version>
         </dependency>
