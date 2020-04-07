@@ -12,6 +12,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @Column(columnDefinition = "批次数量")
     private Integer inventory;
 
@@ -21,12 +23,30 @@ public class Product {
     @Column(columnDefinition = "剩余数量")
     private Integer surplusInventory;
 
+    public Product() {
+    }
+
+    public Product(String name, Integer inventory, Integer sellInventory, Integer surplusInventory) {
+        this.name = name;
+        this.inventory = inventory;
+        this.sellInventory = sellInventory;
+        this.surplusInventory = surplusInventory;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getInventory() {
@@ -51,5 +71,16 @@ public class Product {
 
     public void setSurplusInventory(Integer surplusInventory) {
         this.surplusInventory = surplusInventory;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", inventory=" + inventory +
+                ", sellInventory=" + sellInventory +
+                ", surplusInventory=" + surplusInventory +
+                '}';
     }
 }
