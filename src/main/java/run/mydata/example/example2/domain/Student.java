@@ -1,12 +1,18 @@
 package run.mydata.example.example2.domain;
 
+import run.mydata.annotation.TableCharset;
 import run.mydata.annotation.TableComment;
+import run.mydata.annotation.TableEngine;
+import run.mydata.em.Charset;
+import run.mydata.em.Engine;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Table
 @TableComment("学生表")
+@TableEngine(Engine.MyISAM)
+@TableCharset(Charset.gbk)
 public class Student {
 
     @Id

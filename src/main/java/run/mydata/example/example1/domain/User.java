@@ -1,5 +1,7 @@
 package run.mydata.example.example1.domain;
 
+import run.mydata.annotation.TableCharset;
+
 import javax.persistence.*;
 import java.util.Date;
 
