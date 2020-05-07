@@ -1,5 +1,6 @@
 package run.mydata.example.example2.domain;
 
+import run.mydata.annotation.ColumnComment;
 import run.mydata.annotation.TableCharset;
 import run.mydata.annotation.TableComment;
 import run.mydata.annotation.TableEngine;
@@ -20,6 +21,7 @@ public class Student {
     private Long id;
 
     @Column(columnDefinition = "学生名_Comment")
+    @ColumnComment("学生名")
     private String name;
 
     @Column(name = "stu_age")
