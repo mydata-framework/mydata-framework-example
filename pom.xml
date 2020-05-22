@@ -45,7 +45,7 @@
         <dependency>
             <groupId>run.mydata</groupId>
             <artifactId>mydata-framework</artifactId>
-            <version>1.0</version>
+            <version>4.0</version>
         </dependency>
 
         <!--web-->
