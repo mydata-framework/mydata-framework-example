@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import run.mydata.annotation.TransactionalOption;
 import run.mydata.em.Operate;
+import run.mydata.example.example7.config.DbConfig;
 import run.mydata.example.example7.dao.one.OneDomainDao;
 import run.mydata.example.example7.dao.two.TwoDomainDao;
 import run.mydata.example.example7.domain.one.OneDomain;
@@ -51,10 +53,21 @@ public class Example7Test {
     @ResponseBody
     @Transactional
     public String update() {
-        oneDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", "aaa"));
-        twoDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", "bbb"));
+        String time = System.nanoTime() + "";
+        oneDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", time));
+        twoDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", time));
         return "ok";
     }
 
+    @GetMapping("/update2")
+    @ResponseBody
+    @Transactional
+    @TransactionalOption(connectionManagerNames = {DbConfig.ONE, DbConfig.TWO})
+    public String update2() {
+        String time = System.nanoTime() + "";
+        oneDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", time));
+        twoDomainDao.update(Param.getParams(new Param("id", Operate.EQ, 1)), Param.getMap("name", time));
+        return "ok";
+    }
 
 }

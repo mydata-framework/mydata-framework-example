@@ -14,6 +14,10 @@ import java.util.Arrays;
 
 @Configuration
 public class DbConfig {
+    public static final String ONE ="oneConnectionManager";
+    public static final String TWO ="twoConnectionManager";
+    private static final String DB = "mysql";
+
 
     @Bean
     @ConfigurationProperties(prefix = "db.one")
@@ -32,8 +36,8 @@ public class DbConfig {
         ConnectionManager connectionManager = new ConnectionManager();
         connectionManager.setDataSource(oneDataSource());
         connectionManager.setReadDataSources(Arrays.asList(oneDataSource()));
-        connectionManager.setDb("mysql");
-
+        connectionManager.setConnectionManagerName(ONE);
+        connectionManager.setDb(DB);
         connectionManager.setShowSql(true);
         return connectionManager;
     }
@@ -43,8 +47,8 @@ public class DbConfig {
         ConnectionManager connectionManager = new ConnectionManager();
         connectionManager.setDataSource(twoDataSource());
         connectionManager.setReadDataSources(Arrays.asList(twoDataSource()));
-        connectionManager.setDb("mysql");
-
+        connectionManager.setConnectionManagerName(TWO);
+        connectionManager.setDb(DB);
         connectionManager.setShowSql(true);
         return connectionManager;
     }
