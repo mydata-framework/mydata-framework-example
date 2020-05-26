@@ -11,18 +11,20 @@ import run.mydata.example.example7.dao.one.OneDomainDao;
 import run.mydata.example.example7.dao.two.TwoDomainDao;
 import run.mydata.example.example7.domain.one.OneDomain;
 import run.mydata.example.example7.domain.two.TwoDomain;
+import run.mydata.example.example7.test.service.Example7TestService;
 import run.mydata.helper.Param;
 
 import javax.annotation.Resource;
 
 @Controller
 public class Example7Test {
-
     @Resource
     private OneDomainDao oneDomainDao;
-
     @Resource
     private TwoDomainDao twoDomainDao;
+    @Resource
+    private Example7TestService example7TestService;
+
 
     @GetMapping("/testAdd1")
     public String testAdd() {
@@ -70,4 +72,10 @@ public class Example7Test {
         return "ok";
     }
 
+    @GetMapping("/update3")
+    @ResponseBody
+    public String update3() {
+        example7TestService.update3();
+        return "ok";
+    }
 }
