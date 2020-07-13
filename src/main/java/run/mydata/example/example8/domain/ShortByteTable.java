@@ -23,6 +23,8 @@ public class ShortByteTable {
     @Column(length = 1024)
     private String des;
 
+    private Object a;
+
     public Long getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class ShortByteTable {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public Object getA() {
+        return a;
+    }
+
+    public void setA(Object a) {
+        this.a = a;
     }
 }
