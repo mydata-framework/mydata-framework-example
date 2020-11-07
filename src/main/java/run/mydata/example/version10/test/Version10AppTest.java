@@ -36,7 +36,7 @@ public class Version10AppTest {
     @Test
     public void testQuery() {
         Set<Param> params = Param.getParams();
-        params.add(new Param("content", Operate.AGAINST_IN_NATURAL_LANGUAGE_MODE, "仙界"));
+        params.add(new Param("name,content", Operate.AGAINST_IN_NATURAL_LANGUAGE_MODE, "TXT"));
         List<Book> list = bookDao.getList(params);
         System.out.println(list);
     }
