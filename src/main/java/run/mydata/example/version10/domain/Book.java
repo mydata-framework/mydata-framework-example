@@ -5,10 +5,7 @@ import run.mydata.annotation.MyIndexFullText;
 import run.mydata.annotation.Other;
 import run.mydata.annotation.TableComment;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "t_book")
 @TableComment("书本表")
@@ -18,9 +15,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @MyIndexFullText(otherPropName = {@Other(name = "content")})
+    @Column(name = "c_name")
     private String name;
 
+    @MyIndexFullText(otherPropName = {@Other(name = "name")})
+    @Column(name = "c_content")
     private String content;
 
     @MyIndex(otherPropName = {@Other(name = "author")})

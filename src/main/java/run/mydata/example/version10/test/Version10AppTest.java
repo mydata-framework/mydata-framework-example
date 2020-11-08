@@ -36,7 +36,7 @@ public class Version10AppTest {
     @Test
     public void testQuery() {
         Set<Param> params = Param.getParams();
-        params.add(new Param("name,content", Operate.AGAINST_IN_NATURAL_LANGUAGE_MODE, "TXT"));
+        params.add(new Param("name,content", Operate.AGAINST_IN_NATURAL_LANGUAGE_MODE, "作者"));
         List<Book> list = bookDao.getList(params);
         System.out.println(list);
     }
