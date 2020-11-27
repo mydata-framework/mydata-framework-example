@@ -5,7 +5,7 @@ import run.mydata.manager.IConnectionManager;
 
 import javax.annotation.Resource;
 
-public class MyData_Two<POJO> extends MyDataSupport {
+public class MyData_Two<POJO> extends MyDataSupport<POJO> {
 
     @Resource
     private IConnectionManager twoConnectionManager;
